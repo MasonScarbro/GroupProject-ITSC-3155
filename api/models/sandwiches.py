@@ -3,7 +3,7 @@ from sqlalchemy.orm import relationship
 from datetime import datetime
 from ..dependencies.database import Base
 
-
+#Do we need this at all? is it a menu item?
 class Sandwich(Base):
     __tablename__ = "sandwiches"
 
