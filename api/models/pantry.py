@@ -7,7 +7,7 @@ class Pantry(Base):
     __tablename__ = "pantry"
 
     id = Column(Integer, primary_key=True, index=True)
-    ingredient = Column(String, nullable=False)
+    ingredient = Column(String(255), nullable=False)
     quantity = Column(Integer, nullable=False)
 
     # Foreign key linking to MenuItem

@@ -7,10 +7,10 @@ class Menu(Base):
     __tablename__ = "menu"
 
     id = Column(Integer, primary_key=True, index=True)
-    available_items = Column(String, nullable=False)
-    prices = Column(String, nullable=False)
-    calories = Column(String, nullable=False)
-    categories = Column(String, nullable=False)
+    available_items = Column(String(255), nullable=False)
+    prices = Column(String(255), nullable=False)
+    calories = Column(String(255), nullable=False)
+    categories = Column(String(255), nullable=False)
 
     # Relationship with MenuItem
     menu_items = relationship("MenuItem", back_populates="menu")

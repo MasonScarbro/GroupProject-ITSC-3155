@@ -1,6 +1,7 @@
 from pydantic import BaseModel
-from typing import Optional
+from typing import TYPE_CHECKING, Optional
 from .pantry import Pantry
+
 
 
 class MenuItemBase(BaseModel):

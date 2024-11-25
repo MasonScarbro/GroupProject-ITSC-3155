@@ -1,9 +1,9 @@
 from typing import Optional
 from pydantic import BaseModel
-#maybe?
+
 from .payment_info import PaymentInfo
 from .orders import Order
-#from .sandwiches import Sandwich
+
 
 class CustomerBase(BaseModel):
     name: str

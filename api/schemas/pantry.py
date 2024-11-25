@@ -1,6 +1,5 @@
 from typing import Optional
 from pydantic import BaseModel
-from .menu_item import MenuItem
 
 
 class PantryBase(BaseModel):
@@ -19,7 +18,7 @@ class PantryUpdate(BaseModel):
 
 class Pantry(PantryBase):
     id: int
-    menu_item: Optional[MenuItem] = None  # Reference to related MenuItem
+
 
     class ConfigDict:
         from_attributes = True

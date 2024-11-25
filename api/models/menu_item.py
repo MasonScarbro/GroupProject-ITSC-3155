@@ -7,7 +7,7 @@ class MenuItem(Base):
     __tablename__ = "menu_item"
 
     id = Column(Integer, primary_key=True, index=True)
-    dish = Column(String, nullable=False)
+    dish = Column(String(255), nullable=False)
     calories = Column(Integer, nullable=False)
     price = Column(DECIMAL, nullable=False)
 

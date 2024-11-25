@@ -1,25 +1,16 @@
-from typing import Optional
-from pydantic import BaseModel
+from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy.orm import relationship
+from ..dependencies.database import Base  # Import your Base class
 
+class Review(Base):
+    __tablename__ = "reviews"
 
-class ReviewBase(BaseModel):
-    review_text: str
-    score: int
-    customer_id: int  # Foreign key reference
+    id = Column(Integer, primary_key=True, index=True)
+    review_text = Column(String(255), nullable=False)
+    score = Column(Integer, nullable=False)
+    customer_id = Column(Integer, ForeignKey("customer.id"), nullable=False)  # Foreign key to Customer table
 
+    # Reverse relationship to Customer
+    customer = relationship("Customer", back_populates="reviews")
 
-class ReviewCreate(ReviewBase):
-    pass
-
-
-class ReviewUpdate(BaseModel):
-    review_text: Optional[str] = None
-    score: Optional[int] = None
-    customer_id: Optional[int] = None
-
-
-class Review(ReviewBase):
-    id: int
-
-    class Config:
-        orm_mode = True
+    # Optionally, add other relationships or fields, like timestamps if required
