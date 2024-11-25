@@ -35,13 +35,19 @@
 - **Relationships**:
   - `customer`: Links back to the `Customer` model.
 
----
-
 ## **Order**
-- **???? WAITING FOR SANDWICH STATUS ????**
-- Tracks information such as order date, tracking number, and order status.
+- Represents a purchase made by a customer.
+- **Relationships**:
+  - `order_details`: Links to multiple `OrderDetail` items.
+  - `customer`: Links to the `Customer` who placed the order.
+
 ---
 
 ## **OrderDetail**
-- **???? WAITING FOR SANDWICH STATUS ????**
-- Contains the details of items within an order, such as quantity and discounts applied.
+- Represents a specific item in an order.
+- **Relationships**:
+  - `order`: Links to the `Order` model.
+  - `sandwich`: Links to the `Sandwich` or specific menu item being ordered.
+
+
+---

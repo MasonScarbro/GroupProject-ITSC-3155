@@ -11,6 +11,4 @@ def index():
     menu_item.Base.metadata.create_all(engine)
     customer.Base.metadata.create_all(engine)
     payment_info.Base.metadata.create_all(engine)
-    recipes.Base.metadata.create_all(engine)
-    sandwiches.Base.metadata.create_all(engine) #???
     resources.Base.metadata.create_all(engine)

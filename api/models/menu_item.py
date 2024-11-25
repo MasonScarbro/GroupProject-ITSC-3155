@@ -16,6 +16,9 @@ class MenuItem(Base):
 
     # Relationship with Menu
     menu = relationship("Menu", back_populates="menu_items")
+    ingredients = relationship("Pantry", back_populates="menu_item")
 
     # Relationship with Pantry
     ingredients = relationship("Pantry", back_populates="menu_item")
+    # New relationship (specific order information)
+    order_details = relationship("OrderDetail", back_populates="menu_item")
