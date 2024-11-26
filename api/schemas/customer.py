@@ -12,6 +12,7 @@ class CustomerBase(BaseModel):
     address: Optional[str] = None
 
 
+
 class CustomerCreate(CustomerBase):
     payment_info_id: Optional[int] = None  # Foreign key reference
 
