@@ -11,7 +11,7 @@ class OrderBase(BaseModel):
 
 
 class OrderCreate(OrderBase):
-    pass
+    customer_id: int
 
 
 class OrderUpdate(BaseModel):
@@ -23,6 +23,7 @@ class Order(OrderBase):
     id: int
     order_date: Optional[datetime] = None
     order_details: list[OrderDetail] = None
+    customer_id: int  # Ensure the customer_id is included here
 
     class ConfigDict:
         from_attributes = True

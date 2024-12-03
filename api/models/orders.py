@@ -13,7 +13,7 @@ class Order(Base):
     description = Column(String(300))
 
     # Foreign key linking to customer
-    orders_customer_name = Column(String(100), ForeignKey("customer.name"))
+    customer_id = Column(Integer, ForeignKey("customer.id"))
 
     order_details = relationship("OrderDetail", back_populates="order")
     customer = relationship("Customer", back_populates="orders")  # Added relationship

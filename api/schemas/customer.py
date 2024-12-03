@@ -14,7 +14,7 @@ class CustomerBase(BaseModel):
 
 
 class CustomerCreate(CustomerBase):
-    payment_info_id: Optional[int] = None  # Foreign key reference
+    payment_info_id: int # This is required now, so the foreign key constraint is satisfied
 
 
 class CustomerUpdate(BaseModel):

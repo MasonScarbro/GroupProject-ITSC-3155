@@ -21,3 +21,49 @@ def create(db: Session, request):
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
 
     return new_item
+
+def delete(db: Session, customer_id: int):
+    # Retrieve the customer to delete
+    item = db.query(model.Customer).filter(model.Customer.id == customer_id).first()
+
+    if not item:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Customer not found")
+
+    try:
+        db.delete(item)
+        db.commit()
+    except SQLAlchemyError as e:
+        error = str(e.__dict__['orig'])
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
+
+    return {"detail": "Customer deleted successfully"}
+
+def delete_all(db: Session):
+    try:
+        # Delete all customer records
+        db.query(model.Customer).delete()
+        db.commit()
+    except SQLAlchemyError as e:
+        error = str(e.__dict__['orig'])
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
+
+    return {"detail": "All customers deleted successfully"}
+
+def update(db: Session, customer_id: int, request):
+    try:
+        # Fetch the customer record by ID
+        item = db.query(model.Customer).filter(model.Customer.id == customer_id)
+        if not item.first():
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Customer not found")
+
+        # Convert the request data to a dictionary, excluding unset fields
+        update_data = request.dict(exclude_unset=True)
+        # Update the customer record with the provided data
+        item.update(update_data, synchronize_session=False)
+        db.commit()
+
+    except SQLAlchemyError as e:
+        error = str(e.__dict__['orig'])
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
+
+    return item.first()
