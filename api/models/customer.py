@@ -14,7 +14,8 @@ class Customer(Base):
 
     # Foreign key linking to PaymentInfo
     payment_info_id = Column(Integer, ForeignKey("payment_info.id"))
-
     # Relationships
     payment_info = relationship("PaymentInfo", back_populates="customer")
     orders = relationship("Order", back_populates="customer")
+
+    reviews = relationship("Review", back_populates="customer")

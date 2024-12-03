@@ -12,5 +12,8 @@ class Order(Base):
     order_date = Column(DATETIME, nullable=False, server_default=str(datetime.now()))
     description = Column(String(300))
 
+    # Foreign key linking to customer
+    orders_customer_name = Column(String(100), ForeignKey("customer.name"))
+
     order_details = relationship("OrderDetail", back_populates="order")
     customer = relationship("Customer", back_populates="orders")  # Added relationship
