@@ -8,7 +8,7 @@ class OrderDetail(Base):
 
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     order_id = Column(Integer, ForeignKey("orders.id"))
-    menu_id = Column(Integer, ForeignKey("menu_item.id"))  # Updated
+    menu_item_id = Column(Integer, ForeignKey("menu_item.id"))  # Updated
     amount = Column(Integer, index=True, nullable=False)
 
 

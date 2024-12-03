@@ -7,7 +7,7 @@ def create(db: Session, request):
     new_item = model.Pantry(
         ingredient=request.ingredient,
         quantity=request.quantity,
-        #menu_id = request.menu_id,
+        menu_item_id = request.menu_item_id,
 
     )
 
