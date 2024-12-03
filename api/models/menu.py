@@ -14,3 +14,6 @@ class Menu(Base):
 
     # Relationship with MenuItem
     menu_items = relationship("MenuItem", back_populates="menu")
+
+    # Relationship with Recipes
+    recipes = relationship("Recipe", back_populates="menu")
