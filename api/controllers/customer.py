@@ -1,5 +1,6 @@
 from sqlalchemy.orm import Session
 from fastapi import HTTPException, status, Response, Depends
+from ..models import  payment_info as payment_info_model
 from ..models import customer as model
 from sqlalchemy.exc import SQLAlchemyError
 
@@ -16,6 +17,16 @@ def create(db: Session, request):
         db.add(new_item)
         db.commit()
         db.refresh(new_item)
+
+        #populates payment info's customer id if its used
+        if new_item.payment_info_id:
+            payment_info = db.query(payment_info_model.PaymentInfo).filter(
+                payment_info_model.PaymentInfo.id == new_item.payment_info_id
+            ).first()
+
+            if payment_info:
+                payment_info.customer_id = new_item.id
+                db.commit()
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)

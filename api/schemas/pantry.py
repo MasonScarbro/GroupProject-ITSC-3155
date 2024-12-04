@@ -8,13 +8,13 @@ class PantryBase(BaseModel):
 
 
 class PantryCreate(PantryBase):
-    menu_id: Optional[int] = None  # Link to menu items that use the ingredient
+    menu_item_id: Optional[int] = None  # Link to menu items that use the ingredient
 
 
 class PantryUpdate(BaseModel):
     ingredient: Optional[str] = None
     quantity: Optional[int] = None
-    menu_id: Optional[int] = None
+    menu_item_id: Optional[int] = None
 
 class Pantry(PantryBase):
     id: int

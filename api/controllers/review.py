@@ -1,24 +1,26 @@
 from sqlalchemy.orm import Session
-from fastapi import HTTPException, status, Response, Depends
+from fastapi import HTTPException, status, Response
 from ..models import review as model
 from sqlalchemy.exc import SQLAlchemyError
 
+
 def create(db: Session, request):
-    new_item = model.Review(
-        review_text = request.text,
-        score = request.score,
-        customer_id=request.user_id,
+    new_review = model.Review(
+        review_text=request.review_text,
+        score=request.score,
+        customer_id=request.customer_id,
     )
 
     try:
-        db.add(new_item)
+        db.add(new_review)
         db.commit()
-        db.refresh(new_item)
+        db.refresh(new_review)
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
 
-    return new_item
+    return new_review
+
 
 def read_all(db: Session):
     try:
@@ -28,37 +30,38 @@ def read_all(db: Session):
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
     return result
 
-def read_one(db: Session, item_id):
+
+def read_one(db: Session, review_id):
     try:
-        item = db.query(model.Review).filter(model.Review.id == item_id).first()
-        if not item:
+        review = db.query(model.Review).filter(model.Review.id == review_id).first()
+        if not review:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Id not found!")
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
-    return item
+    return review
 
-def update(db: Session, item_id, request):
+
+def update(db: Session, review_id, request):
     try:
-        item = db.query(model.Review).filter(model.Review.id == item_id)
-        if not item.first():
+        review = db.query(model.Review).filter(model.Review.id == review_id)
+        if not review.first():
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Id not found!")
-
         update_data = request.dict(exclude_unset=True)
-        item.update(update_data, synchronize_session=False)
+        review.update(update_data, synchronize_session=False)
         db.commit()
-
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
-    return item.first()
+    return review.first()
 
-def delete(db: Session, item_id):
+
+def delete(db: Session, review_id):
     try:
-        item = db.query(model.Review).filter(model.Review.id == item_id)
-        if not item.first():
+        review = db.query(model.Review).filter(model.Review.id == review_id)
+        if not review.first():
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Id not found!")
-        item.delete(synchronize_session=False)
+        review.delete(synchronize_session=False)
         db.commit()
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])

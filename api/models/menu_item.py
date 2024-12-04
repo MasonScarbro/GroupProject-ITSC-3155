@@ -12,13 +12,13 @@ class MenuItem(Base):
     price = Column(DECIMAL, nullable=False)
 
     # Foreign key linking to Menu
-    #menu_id = Column(Integer, ForeignKey("menu.id"))
+    menu_id = Column(Integer, ForeignKey("menu.id"))
 
     # Relationship with Menu
     menu = relationship("Menu", back_populates="menu_items")
     ingredients = relationship("Pantry", back_populates="menu_item")
 
-    # Relationship with Pantry
-    ingredients = relationship("Pantry", back_populates="menu_item")
+
+
     # New relationship (specific order information)
     order_details = relationship("OrderDetail", back_populates="menu_item")
