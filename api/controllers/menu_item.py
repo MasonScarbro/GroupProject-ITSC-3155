@@ -10,6 +10,7 @@ def create(db: Session, request):
         calories=request.calories,
         price=request.price,
         menu_id=request.menu_id,
+        ingredients = request.ingredients
     )
 
     try:

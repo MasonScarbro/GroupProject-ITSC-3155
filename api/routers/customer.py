@@ -9,6 +9,14 @@ router = APIRouter(
     prefix="/customer"
 )
 
+@router.get("/", response_model=list[schema.Customer])
+def read_all(db: Session = Depends(get_db)):
+    return controller.read_all(db)
+
+@router.get("/{item_id}", response_model=schema.Customer)
+def read_one(item_id: int, db: Session = Depends(get_db)):
+    return controller.read_one(db, item_id=item_id)
+
 @router.delete("/customer/{customer_id}")
 def delete_customer(customer_id: int, db: Session = Depends(get_db)):
     return controller.delete(db, customer_id)
