@@ -2,15 +2,18 @@ from sqlalchemy.orm import Session
 from fastapi import HTTPException, status, Response
 from ..models import menu_item as model
 from sqlalchemy.exc import SQLAlchemyError
-
+from ..models.pantry import Pantry
 
 def create(db: Session, request):
+    ingredientsV = db.query(Pantry).filter(Pantry.id.in_(request.ingredients)).all()
+    if len(ingredientsV) != len(request.ingredients):
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="One or more ingredients not found.")
     new_item = model.MenuItem(
         dish=request.dish,
         calories=request.calories,
         price=request.price,
         menu_id=request.menu_id,
-        ingredients = request.ingredients
+        ingredients = ingredientsV
     )
 
     try:

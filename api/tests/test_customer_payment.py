@@ -7,7 +7,11 @@ from main import app
 from ..models import customer, payment_info
 from ..controllers import customer as customer_controller
 from ..controllers import payment_info as payment_info_controller
+from ..controllers import menu_item as menu_item_controller
 from pydantic import BaseModel
+from ..models.menu import Menu
+from ..models.pantry import Pantry
+from ..schemas.menu_item import MenuItemCreate
 
 # Setup for in-memory SQLite database for testing
 SQLALCHEMY_DATABASE_URL = "sqlite:///:memory:"
@@ -75,3 +79,6 @@ def test_create_payment_info_and_customer(db, client):
     assert customer_item.email == "john.doe@example.com"
     assert customer_item.payment_info_id == payment_info_item.id
     assert payment_info_item.customer_id == customer_item.id
+
+
+
