@@ -51,8 +51,8 @@ def test_create_menu_item(db):
     db.commit()
     db.refresh(menu)
 
-    # Assuming `Pantry` model exists, create a Pantry entry (for ingredients)
-    pantry_item = Pantry(ingredient="Tomato", quantity=100)
+
+    pantry_item = Pantry(ingredient="Tomato", quantity=100, menu_id=menu.id)
     db.add(pantry_item)
     db.commit()
     db.refresh(pantry_item)
