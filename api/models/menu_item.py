@@ -10,14 +10,14 @@ class MenuItem(Base):
     dish = Column(String(255), nullable=False)
     calories = Column(Integer, nullable=False)
     price = Column(DECIMAL, nullable=False)
-    ingredients = Column(JSON, nullable=False) # JSON column for arrays
+    #ingredients = Column(JSON, nullable=False) # JSON column for arrays
 
     # Foreign key linking to Menu
     menu_id = Column(Integer, ForeignKey("menu.id"))
 
     # Relationship with Menu
     menu = relationship("Menu", back_populates="menu_items")
-    ingredientss = relationship("Pantry", back_populates="menu_item")
+    ingredients = relationship("Pantry", back_populates="menu_item")
 
 
 

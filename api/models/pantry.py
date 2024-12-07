@@ -14,4 +14,4 @@ class Pantry(Base):
     menu_id = Column(Integer, ForeignKey("menu_item.id"))
 
     # Relationship with MenuItem
-    menu_item = relationship("MenuItem", back_populates="ingredientss")
+    menu_item = relationship("MenuItem", back_populates="ingredients")
