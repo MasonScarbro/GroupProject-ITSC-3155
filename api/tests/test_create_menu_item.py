@@ -52,7 +52,7 @@ def test_create_menu_item(db):
     db.refresh(menu)
 
 
-    pantry_item = Pantry(ingredient="Tomato", quantity=100, menu_id=menu.id)
+    pantry_item = Pantry(ingredient="Tomato", quantity=100)
     db.add(pantry_item)
     db.commit()
     db.refresh(pantry_item)
@@ -77,7 +77,7 @@ def test_create_menu_item(db):
     assert len(menu_item.ingredients) == 1
     assert menu_item.ingredients[0].id == pantry_item.id
 
-    # Cleanup (if necessary)
+    # Cleanup
     db.delete(menu_item)
     db.delete(pantry_item)
     db.delete(menu)

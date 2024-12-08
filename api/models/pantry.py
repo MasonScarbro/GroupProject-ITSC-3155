@@ -11,7 +11,7 @@ class Pantry(Base):
     quantity = Column(Integer, nullable=False)
 
     # Foreign key linking to MenuItem
-    menu_id = Column(Integer, ForeignKey("menu_item.id"))
+    menu_id = Column(Integer, ForeignKey("menu_item.id"), nullable=True)
 
     # Relationship with MenuItem
     menu_item = relationship("MenuItem", back_populates="ingredients")

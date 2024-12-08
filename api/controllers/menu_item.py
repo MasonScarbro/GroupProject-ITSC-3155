@@ -5,20 +5,35 @@ from sqlalchemy.exc import SQLAlchemyError
 from ..models.pantry import Pantry
 
 def create(db: Session, request):
-    ingredientsV = db.query(Pantry).filter(Pantry.id.in_(request.ingredients)).all()
-    if len(ingredientsV) != len(request.ingredients):
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="One or more ingredients not found.")
+
+
     new_item = model.MenuItem(
         dish=request.dish,
         calories=request.calories,
         price=request.price,
         menu_id=request.menu_id,
-        ingredients = ingredientsV
+
     )
+    db.add(new_item)
+    db.commit()
+    db.refresh(new_item)
+    if request.ingredients:
+        for ingredient_id in request.ingredients:
+            pantry_item = db.query(Pantry).filter(Pantry.id == ingredient_id).first()
+            if pantry_item:
+                pantry_item.menu_id = new_item.id
+                # Explicitly add the pantry item to the menu_item's ingredients
+                new_item.ingredients.append(pantry_item)
+            else:
+                raise HTTPException(
+                    status_code=status.HTTP_400_BAD_REQUEST,
+                    detail=f"Ingredient with ID {ingredient_id} not found"
+                )
+
+        # Commit the changes
+        db.commit()
 
     try:
-        db.add(new_item)
-        db.commit()
         db.refresh(new_item)
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])

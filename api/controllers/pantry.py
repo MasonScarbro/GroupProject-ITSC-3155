@@ -1,15 +1,24 @@
 from sqlalchemy.orm import Session
 from fastapi import HTTPException, status, Response, Depends
 from ..models import pantry as model
+from ..models.menu_item import MenuItem
 from sqlalchemy.exc import SQLAlchemyError
 
 def create(db: Session, request):
+    if request.menu_id is not None:
+        menu_item_exists = db.query(MenuItem).filter_by(id=request.menu_id).first()
+        if not menu_item_exists:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=f"Menu item with id {request.menu_id} does not exist."
+            )
+
     new_item = model.Pantry(
         ingredient=request.ingredient,
         quantity=request.quantity,
         menu_id = request.menu_id
     )
-
+    print(request.dict())
     try:
         db.add(new_item)
         db.commit()
